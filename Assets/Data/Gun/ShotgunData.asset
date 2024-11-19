@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d07789fe0acd294287e2aaee9f3afe9, type: 3}
   m_Name: ShotgunData
   m_EditorClassIdentifier: 
+  gunSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  bullet: {fileID: 0}
   bulletsNum: 3
   timeBetweenShots: 1
+  gunHandlePos: {x: 0, y: 0, z: 0}
+  bulletHolePos: {x: 0, y: 0, z: 0}
   shotType: 1
   circleAngle: 60

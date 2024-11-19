@@ -12,7 +12,6 @@ public enum SHOT_TYPE
 public class GunData : ScriptableObject
 {
     public Sprite gunSprite;
-    public GameObject bullet = null;
 
     [Min(1)]
     public int bulletsNum = 1;
@@ -69,6 +68,46 @@ public class GunData : ScriptableObject
         }
 
         return shotVectors;
+    }
+
+    public List<float> GetBulletsEulerZRotations()
+    {
+        List<float> zAngles = new();
+        if (!MultiBullets || shotType == SHOT_TYPE.Paraller)
+        {
+            for (int i = 0; i < bulletsNum; ++i)
+            {
+                zAngles.Add(0.0f);
+            }
+            return zAngles;
+        }
+
+        if (shotType == SHOT_TYPE.Circle)
+        {
+            if (bulletsNum % 2 == 0)
+            {
+                float angleSteps = circleAngle / (bulletsNum - 1);
+                for (int i = 0; i < bulletsNum / 2; ++i)
+                {
+                    float angle = angleSteps / 2f + angleSteps * i;
+                    zAngles.Add(angle);
+                    zAngles.Add(-angle);
+                }
+            }
+            else
+            {
+                float angleSteps = circleAngle / (bulletsNum - 1);
+                zAngles.Add(0.0f);
+                for (int i = 0; i < (bulletsNum - 1) / 2; ++i)
+                {
+                    float angle = angleSteps + angleSteps * i;
+                    zAngles.Add(angle);
+                    zAngles.Add(-angle);
+                }
+            }
+        }
+
+        return zAngles;
     }
 
     public List<Vector2> GetBulletsStartingPoints() 

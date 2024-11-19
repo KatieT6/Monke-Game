@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
 
     private InputAction moveAction;
-    private InputAction attackAction;
     private InputAction jumpAction;
 
     [Header("Jump Settings: ")]
@@ -41,15 +40,7 @@ public class PlayerMovement : MonoBehaviour
         {
             input = GetComponent<PlayerInput>();
             moveAction = input.actions["Move"];
-            attackAction = input.actions["Attack"];
             jumpAction = input.actions["Jump"];
-        }
-        #endregion
-
-        #region ATTACK
-        if (attackAction.triggered)
-        {
-            // Attack
         }
         #endregion
 
