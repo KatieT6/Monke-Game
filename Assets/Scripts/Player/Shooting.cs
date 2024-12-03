@@ -13,6 +13,8 @@ public class Shooting : MonoBehaviour
     public GameObject bulletPrefab;
     public Vector2 gunLocalPosition;
 
+    private float delayTime = 0.0f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,7 +33,8 @@ public class Shooting : MonoBehaviour
         #endregion
 
         #region ATTACK
-        if (attackAction.triggered)
+        delayTime -= Time.deltaTime;
+        if (attackAction.triggered && delayTime <= 0.0f)
         {
             // Attack
             List<GameObject> bullets = new();
@@ -47,6 +50,7 @@ public class Shooting : MonoBehaviour
                 b.Data = currentBullets;
                 b.Shoot();
             }
+            delayTime = currentGun.timeBetweenShots;
         }
         #endregion
     }
