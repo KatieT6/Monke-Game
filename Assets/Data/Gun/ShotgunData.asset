@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: ShotgunData
   m_EditorClassIdentifier: 
   gunSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  bullet: {fileID: 0}
   bulletsNum: 3
   timeBetweenShots: 1
   gunHandlePos: {x: 0, y: 0, z: 0}

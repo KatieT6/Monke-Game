@@ -22,6 +22,13 @@ public class PlayerMovement : MonoBehaviour
     private float jumpTime = 0f;
     private float jumpVelocity = 0f;
 
+    private float jumpBufferTime = .15f;
+    private float jumpBufferCounter;
+
+    private float coyoteTime = 0.15f;
+    private float coyoteTimeCounter;
+
+
     [Header("Move Settings: ")]
     public float moveSpeed = 10f;
     public float velocityChangeSpeed = 10f;
@@ -44,11 +51,35 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
 
+        #region GET_JUMP_BUFFER
+        if (jumpAction.triggered)
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+        #endregion
+
+        #region GET_COYOTE_TIME
+        if (IsOnGround && rb.linearVelocityY == 0)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+        #endregion
+
         #region JUMP
-        if (jumpAction.triggered && IsOnGround)
+        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             // Jump
             jumpTime = Mathf.Sqrt((-2f * jumpHeight) / Physics2D.gravity.y);
+            coyoteTimeCounter = 0f;
+            jumpBufferCounter = 0f;
             jumpVelocity = -Physics2D.gravity.y * jumpTime;
             rb.linearVelocityY = jumpVelocity;
             jumped = true;
