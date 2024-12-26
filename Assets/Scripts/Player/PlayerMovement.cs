@@ -2,13 +2,10 @@ using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(GroundCheck))]
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    private GroundCheck groundCheck;
-    public bool IsOnGround => groundCheck.IsOnGround;
     private PlayerInput input;
     private Rigidbody2D rb;
 
@@ -21,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
     private bool jumped = false;
     private float jumpTime = 0f;
     private float jumpVelocity = 0f;
+
+    public Vector2 boxSize;
+    public float castDistance;
+    public LayerMask groundLayer;
 
     private float jumpBufferTime = .15f;
     private float jumpBufferCounter;
@@ -35,13 +36,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        groundCheck = GetComponent<GroundCheck>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         #region INIT_INPUT
         if (input == null)
         {
@@ -63,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         #endregion
 
         #region GET_COYOTE_TIME
-        if (IsOnGround && rb.linearVelocityY == 0)
+        if (isGrounded() && rb.linearVelocityY == 0)
         {
             coyoteTimeCounter = coyoteTime;
         }
@@ -84,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocityY = jumpVelocity;
             jumped = true;
         }
-        else if (!jumpAction.IsPressed() && !IsOnGround && rb.linearVelocityY > 0f && jumped)
+        else if (!jumpAction.IsPressed() && !isGrounded() && rb.linearVelocityY > 0f && jumped)
         {
             rb.linearVelocityY = Mathf.Lerp(rb.linearVelocityY, 0f, Time.deltaTime * jumpStopSpeed);
         }
@@ -100,4 +101,24 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, move, Time.deltaTime * velocityChangeSpeed);
         #endregion
     }
+
+    public bool isGrounded()
+    {
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Draw ground ray
+        Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
+    }
+
+
 }
