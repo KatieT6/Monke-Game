@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {
+    [SerializeField] PlayerMovement player;
 
     public GameObject Bullet;
 
@@ -15,8 +16,25 @@ public class WeaponScript : MonoBehaviour
 
     public bool isAutomatic = true;
 
+    public int maxAmmo = 2;
+    private int currentAmmo;
+
+    void Start()
+    {
+        currentAmmo = maxAmmo;
+    }
+
     void Update()
     {
+        if (currentAmmo < maxAmmo)
+        {
+            if (player.isGrounded())
+            {
+                currentAmmo = maxAmmo;
+            }
+        }
+
+
         if (isAutomatic)
         {
             if (Input.GetMouseButton(0))
@@ -44,7 +62,11 @@ public class WeaponScript : MonoBehaviour
 
     void Fire()
     {
-        GameObject BulletInstance = Instantiate(Bullet, ShootPoint.position, ShootPoint.rotation);
-        BulletInstance.GetComponent<Rigidbody2D>().AddForce(BulletInstance.transform.right * bulletSpeed);
+        if (currentAmmo >= 1)
+        {
+            currentAmmo--;
+            GameObject BulletInstance = Instantiate(Bullet, ShootPoint.position, ShootPoint.rotation);
+            BulletInstance.GetComponent<Rigidbody2D>().AddForce(BulletInstance.transform.right * bulletSpeed);
+        }
     }
 }
