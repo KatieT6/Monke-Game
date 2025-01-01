@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3802312216019715312}
   - component: {fileID: 4212030975102381943}
   m_Layer: 0
-  m_Name: Pistol
+  m_Name: WeaponBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,10 +102,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 6421076675575284445, guid: c7988c3e7310fca44bc77e58b3258b25, type: 3}
-  bulletSpeed: 700
+  bulletSpeed: 1200
   ShootPoint: {fileID: 492592939357188391}
-  fireRate: 2
-  isAutomatic: 0
+  fireRate: 7
+  isAutomatic: 1
 --- !u!1 &8467628751695337419
 GameObject:
   m_ObjectHideFlags: 0
