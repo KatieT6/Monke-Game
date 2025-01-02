@@ -12,12 +12,15 @@ public class PlayerMovement : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
 
+    [SerializeField] AimWeapon aim;
+
     [Header("Jump Settings: ")]
-    public float jumpHeight = 10f;
-    public float jumpStopSpeed = 3f;
+   // public float jumpHeight = 10f;
+    //public float jumpStopSpeed = 3f;
     private bool jumped = false;
-    private float jumpTime = 0f;
-    private float jumpVelocity = 0f;
+    public float jumpForce = 10f;
+    //private float jumpTime = 0f;
+    //private float jumpVelocity = 0f;
 
     public Vector2 boxSize;
     public float castDistance;
@@ -32,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Move Settings: ")]
     public float moveSpeed = 10f;
-    public float velocityChangeSpeed = 10f;
+    public float velocityChangeSpeed = 3f;
+    public float maxSpeed = 20f;
 
     private void Awake()
     {
@@ -42,7 +46,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         #region INIT_INPUT
         if (input == null)
         {
@@ -78,16 +81,10 @@ public class PlayerMovement : MonoBehaviour
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
             // Jump
-            jumpTime = Mathf.Sqrt((-2f * jumpHeight) / Physics2D.gravity.y);
             coyoteTimeCounter = 0f;
             jumpBufferCounter = 0f;
-            jumpVelocity = -Physics2D.gravity.y * jumpTime;
-            rb.linearVelocityY = jumpVelocity;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumped = true;
-        }
-        else if (!jumpAction.IsPressed() && !isGrounded() && rb.linearVelocityY > 0f && jumped)
-        {
-            rb.linearVelocityY = Mathf.Lerp(rb.linearVelocityY, 0f, Time.deltaTime * jumpStopSpeed);
         }
 
         if (jumped && rb.linearVelocityY <= 0f)
@@ -98,7 +95,19 @@ public class PlayerMovement : MonoBehaviour
 
         #region MOVE_HORIZONTAL
         float move = moveAction.ReadValue<Vector2>().x * moveSpeed;
-        rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, move, Time.deltaTime * velocityChangeSpeed);
+        if (rb.linearVelocityX < move){
+            rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, move, Time.deltaTime * velocityChangeSpeed);
+        }
+        else
+        {
+            rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, move, Time.deltaTime * velocityChangeSpeed * 0.5f);
+        }
+        #endregion
+
+        #region CLAMP_SPEED
+        rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed);
+        rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -maxSpeed, maxSpeed);
+
         #endregion
     }
 
@@ -120,5 +129,18 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
     }
 
+    public void Knockback(int force)
+    {
+        Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (Vector2)((worldMousePos - (Vector2)transform.position));
+        direction.Normalize();
 
+        Vector2 newVelocity = new Vector2(-direction.x, -direction.y) * force;
+        Vector2 currentVelocity = rb.linearVelocity;
+        //currentVelocity.x *= Mathf.Min(1.0f - Mathf.Abs(direction.x), 1.0f);
+        //currentVelocity.y *= Mathf.Min(1.0f - Mathf.Abs(direction.y), 1.0f);
+        currentVelocity.y *= 0.2f;
+        currentVelocity.x *= 0.7f;
+        rb.linearVelocity = currentVelocity + newVelocity;
+    }
 }

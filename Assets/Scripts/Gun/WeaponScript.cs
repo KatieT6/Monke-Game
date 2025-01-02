@@ -4,19 +4,21 @@ public class WeaponScript : MonoBehaviour
 {
     [SerializeField] PlayerMovement player;
 
-    public GameObject Bullet;
+    [SerializeField] GameObject Bullet;
 
-    public float bulletSpeed;
+    [SerializeField] float bulletSpeed;
 
-    public Transform ShootPoint;
+    [SerializeField] Transform ShootPoint;
 
-    public float fireRate;
+    [SerializeField] float fireRate;
 
     float shotCountdown;
 
-    public bool isAutomatic = true;
+    [SerializeField] bool isAutomatic = true;
 
-    public int maxAmmo = 2;
+    [SerializeField] int knockbackForce;
+
+    [SerializeField] int maxAmmo = 2;
     private int currentAmmo;
 
     void Start()
@@ -67,6 +69,8 @@ public class WeaponScript : MonoBehaviour
             currentAmmo--;
             GameObject BulletInstance = Instantiate(Bullet, ShootPoint.position, ShootPoint.rotation);
             BulletInstance.GetComponent<Rigidbody2D>().AddForce(BulletInstance.transform.right * bulletSpeed);
+
+            player.Knockback(knockbackForce);
         }
     }
 }
