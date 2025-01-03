@@ -1,6 +1,7 @@
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
 
+    [SerializeField] CinemachineCamera targetCamera;
     [SerializeField] AimWeapon aim;
 
     [Header("Jump Settings: ")]
@@ -46,6 +48,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region DYNAMIC_FOV
+        Vector2 velocity = rb.linearVelocity;
+        float speed = Mathf.Max(Mathf.Abs(velocity.x), Mathf.Abs(velocity.y));
+        float targetZoom = 10f + ((speed / maxSpeed) * 2);
+        targetCamera.Lens.OrthographicSize = Mathf.Lerp(targetCamera.Lens.OrthographicSize, targetZoom, .05f);
+        #endregion
+
         #region INIT_INPUT
         if (input == null)
         {

@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &434756827 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2333218595147336963, guid: 85c9f1f704095ec419ed100be477fef4, type: 3}
+  m_PrefabInstance: {fileID: 2660321646467435764}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +237,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 13.080616
+  orthographic size: 11
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -354,6 +365,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1924730995
       objectReference: {fileID: 0}
+    - target: {fileID: 2333218595147336963, guid: 85c9f1f704095ec419ed100be477fef4, type: 3}
+      propertyPath: Lens.OrthographicSize
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6595936493709561890, guid: 85c9f1f704095ec419ed100be477fef4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.01
@@ -394,6 +409,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7294650781384923841, guid: 85c9f1f704095ec419ed100be477fef4, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard&Mouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 7294650781384923841, guid: 85c9f1f704095ec419ed100be477fef4, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7643360991550499285, guid: 85c9f1f704095ec419ed100be477fef4, type: 3}
       propertyPath: shakeForce
       value: 0.1
@@ -402,6 +425,14 @@ PrefabInstance:
       propertyPath: ImpulseDefinition.ImpulseDuration
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 8464765011903402402, guid: 85c9f1f704095ec419ed100be477fef4, type: 3}
+      propertyPath: vcam
+      value: 
+      objectReference: {fileID: 434756827}
+    - target: {fileID: 8464765011903402402, guid: 85c9f1f704095ec419ed100be477fef4, type: 3}
+      propertyPath: targetCamera
+      value: 
+      objectReference: {fileID: 434756827}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
