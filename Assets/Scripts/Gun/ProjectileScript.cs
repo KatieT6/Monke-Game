@@ -16,9 +16,6 @@ public class ProjectileScript : MonoBehaviour
     void Update()
     {
 
-
-        Debug.Log(ms);
-
         while (ms <= lifeTime)
         {
             ms += Time.deltaTime;

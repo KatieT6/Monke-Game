@@ -1,7 +1,13 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class WeaponScript : MonoBehaviour
 {
+    private CinemachineImpulseSource impulseSource;
+
+    //Force of camera shake when firing weapon
+    [SerializeField] private float shakeForce = .5f;
+
     [SerializeField] PlayerMovement player;
 
     [SerializeField] GameObject Bullet;
@@ -23,6 +29,8 @@ public class WeaponScript : MonoBehaviour
 
     void Start()
     {
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+
         currentAmmo = maxAmmo;
     }
 
@@ -66,6 +74,11 @@ public class WeaponScript : MonoBehaviour
     {
         if (currentAmmo >= 1)
         {
+            Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = new Vector2(worldMousePos.x - transform.position.x, worldMousePos.y - transform.position.y);
+            //Shake camera
+            CameraShake.instance.ShakeCamera(impulseSource, shakeForce, direction);
+
             currentAmmo--;
             GameObject BulletInstance = Instantiate(Bullet, ShootPoint.position, ShootPoint.rotation);
             BulletInstance.GetComponent<Rigidbody2D>().AddForce(BulletInstance.transform.right * bulletSpeed);
