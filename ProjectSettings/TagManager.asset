@@ -42,5 +42,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 339536617
+    locked: 0
+  - name: Ground
+    uniqueID: 4147072507
+    locked: 0
+  - name: Entities
+    uniqueID: 2370236301
+    locked: 0
+  - name: Weapons
+    uniqueID: 3966283519
+    locked: 0
+  - name: Crosshair
+    uniqueID: 2775227037
+    locked: 0
   m_RenderingLayers:
   - Default
