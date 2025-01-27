@@ -83,7 +83,7 @@ public class WeaponScript : MonoBehaviour
             GameObject BulletInstance = Instantiate(Bullet, ShootPoint.position, ShootPoint.rotation);
             BulletInstance.GetComponent<Rigidbody2D>().AddForce(BulletInstance.transform.right * bulletSpeed);
 
-            player.Knockback(knockbackForce);
+            //player.Knockback(knockbackForce);
         }
     }
 }
