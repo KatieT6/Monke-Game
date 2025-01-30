@@ -10,17 +10,31 @@ public class Melee : MonoBehaviour
     [SerializeField] private int punchForce;
     [SerializeField] private float punchDuration;
 
-    [SerializeField] private Transform attackPos;
+    private Vector3 attackPos;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask hitLayers;
 
-    void Start()
-    {
-        
-    }
+    private bool isPunching = false;
+    private Vector2 direction;
+    private Vector2 worldMousePos;
+    private float counter = 0f;
 
     void Update()
     {
+        if (isPunching)
+        {
+            if(counter < punchDuration)
+            {
+                counter += Time.deltaTime;
+                checkHit();
+            }
+            else
+            {
+                isPunching = false;
+                counter = 0f;
+            }
+        }
+
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -34,35 +48,25 @@ public class Melee : MonoBehaviour
 
     void Attack()
     {
-        Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = new Vector2(worldMousePos.x - transform.position.x, worldMousePos.y - transform.position.y);
-        checkHit(direction);
-        /*if (!checkHit(direction))
+        worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        direction = new Vector2(worldMousePos.x - transform.position.x, worldMousePos.y - transform.position.y);
+        if (!checkHit())
         {
-            player.Knockback(punchForce, -direction);
-            float counter = 0f;
-            while(counter < punchDuration)
-            {
-                counter += Time.deltaTime;
-                if (checkHit(direction))
-                {
-                    break;   
-                }
-            }
+            isPunching = true;
+            //player.Knockback(punchForce, -direction, .5f);
         }
-        */
     }
 
-    bool checkHit(Vector2 direction)
+    bool checkHit()
     {
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(attackPos.position, direction, attackRange, hitLayers);
-        if (raycastHit2D.collider != null)
+        if(Physics2D.Raycast(transform.position, direction, attackRange, hitLayers))
         {
-            player.Knockback(knockbackForce, direction);
+            player.Knockback(knockbackForce, direction, 1f);
             return true;
         }
         else
         {
+            
             return false;
         }
     }

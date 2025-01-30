@@ -81,10 +81,15 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
     }
 
-    public void Knockback(int force, Vector2 knockbackDirection)
+    public void Knockback(int force, Vector2 knockbackDirection, float velocityOverride)
     {
         knockbackDirection.Normalize();
         Vector2 newVelocity = new Vector2(-knockbackDirection.x, -knockbackDirection.y) * force;
-        rb.linearVelocity = newVelocity;
+        rb.linearVelocity = rb.linearVelocity * (1 - velocityOverride) + newVelocity;
+        if (isGrounded())
+        {
+            Debug.Log("ziemia");
+            rb.linearVelocity *= new Vector2(1, 1.1f);
+        }
     }
 }
