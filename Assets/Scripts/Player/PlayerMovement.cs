@@ -50,9 +50,13 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded()){
             rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, move, Time.deltaTime * velocityChangeSpeed);
         }
-        else
+        else if (Mathf.Abs(rb.linearVelocityX) <= maxSpeed)
         {
             rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, move, Time.deltaTime * velocityChangeSpeed * 0.5f);
+        }
+        else
+        {
+            rb.linearVelocityX = Mathf.Lerp(rb.linearVelocityX, move, Time.deltaTime * velocityChangeSpeed * 0.3f);
         }
         #endregion
 
@@ -85,10 +89,11 @@ public class PlayerMovement : MonoBehaviour
     {
         knockbackDirection.Normalize();
         Vector2 newVelocity = new Vector2(-knockbackDirection.x, -knockbackDirection.y) * force;
-        rb.linearVelocity = rb.linearVelocity * (1 - velocityOverride) + newVelocity;
+        rb.linearVelocity = rb.linearVelocity * new Vector2(1 - velocityOverride, 0f) + newVelocity;
+        rb.linearVelocity *= new Vector2(1.1f, 1);
         if (isGrounded())
         {
-            Debug.Log("ziemia");
+            //If player is grounded give him slightly higher vertical velocity
             rb.linearVelocity *= new Vector2(1, 1.1f);
         }
     }

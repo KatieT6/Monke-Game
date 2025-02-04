@@ -54,7 +54,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0
-  m_GravityScale: 4
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -180,7 +180,6 @@ MonoBehaviour:
   knockbackForce: 25
   punchForce: 15
   punchDuration: 0.5
-  attackPos: {fileID: 6595936493709561890}
   attackRange: 2
   hitLayers:
     serializedVersion: 2
