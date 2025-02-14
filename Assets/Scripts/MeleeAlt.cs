@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class Melee : MonoBehaviour
+public class MeleeAlt : MonoBehaviour
 {
     [SerializeField] PlayerMovement player;
 
-    [Header("Attack Settings: ")]
     private float attackCooldown;
     [SerializeField] private float attackSpeed;
     [SerializeField] private int knockbackForce;
@@ -16,16 +15,18 @@ public class Melee : MonoBehaviour
     [SerializeField] private LayerMask hitLayers;
 
     private bool isPunching = false;
-    private Vector2 direction;
-    private Vector2 worldMousePos;
     private float counter = 0f;
+
+    Vector2 input = new Vector2(0, 0);
 
     void Update()
     {
-        #region ATTACK_BUFFER
+        input.x = Input.GetAxisRaw("Horizontal");
+        input.y = Input.GetAxisRaw("Vertical");
+
         if (isPunching)
         {
-            if (counter < punchDuration)
+            if(counter < punchDuration)
             {
                 counter += Time.deltaTime;
                 checkHit();
@@ -36,10 +37,9 @@ public class Melee : MonoBehaviour
                 counter = 0f;
             }
         }
-        #endregion
 
-        #region ATTACK_INPUT
-        if (Input.GetMouseButtonDown(0))
+
+        if(input != Vector2.zero)
         {
             if (Time.time > attackCooldown)
             {
@@ -47,13 +47,10 @@ public class Melee : MonoBehaviour
                 Attack();
             }
         }
-        #endregion
     }
 
     void Attack()
     {
-        worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        direction = new Vector2(worldMousePos.x - transform.position.x, worldMousePos.y - transform.position.y);
         if (!checkHit())
         {
             isPunching = true;
@@ -63,16 +60,22 @@ public class Melee : MonoBehaviour
 
     bool checkHit()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, attackRange, hitLayers);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, input, attackRange, hitLayers);
         if (hit)
         {
             isPunching = false;
             Hittable hittable;
-            player.Knockback(knockbackForce, direction);
-            if (hittable = hit.collider.GetComponent<Hittable>())
-                hittable.GetHit(direction);  
+            if(hittable = hit.collider.GetComponent<Hittable>())
+            {
+                hittable.GetHit(input);
+            }
+            player.Knockback(knockbackForce, input);
+            return true;
         }
-        return hit;
-
+        else
+        {
+            
+            return false;
+        }
     }
 }

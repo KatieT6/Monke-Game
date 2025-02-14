@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 5270507669611995587}
   - component: {fileID: 7294650781384923841}
   - component: {fileID: 8464765011903402402}
-  - component: {fileID: 3288015116778539137}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,29 +160,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   moveSpeed: 12
-  velocityChangeSpeed: 6
+  velocityChangeSpeed: 8
   maxSpeed: 50
---- !u!114 &3288015116778539137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 445182522024763713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfc7969d4261a2a439d1a6362c5faa89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 8464765011903402402}
-  attackSpeed: 4
-  knockbackForce: 25
-  punchForce: 15
-  punchDuration: 0.5
-  attackRange: 2
-  hitLayers:
-    serializedVersion: 2
-    m_Bits: 128
+  gravityScale: 5
+  fallMultiplier: 1.4
 --- !u!1 &610655934221595670
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +240,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -328683777
   m_SortingLayer: 4
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 6937817954938267909, guid: 59e838b11f0416c47b91eda0fba11b78, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

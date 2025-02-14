@@ -10,11 +10,8 @@ public class CameraShake : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-        }
     }
-
 
     public void ShakeCamera(CinemachineImpulseSource impulseSource, float shakeForce, Vector2 dir)
     {

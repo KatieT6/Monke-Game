@@ -8,7 +8,6 @@ public class CursorScript : MonoBehaviour
         Cursor.visible = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector2 mouseCursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
