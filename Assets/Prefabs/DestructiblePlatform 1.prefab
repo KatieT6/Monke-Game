@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DestructiblePlatform 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5728436141816219964, guid: 98aed5ee2af718742a0fd27fd9c50d45, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7416585065920169523, guid: 98aed5ee2af718742a0fd27fd9c50d45, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

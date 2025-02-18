@@ -3,40 +3,37 @@ using UnityEngine;
 public class MovableBlock : MonoBehaviour
 {
     [SerializeField] Hittable hittable;
-    [SerializeField] Transform playerPos;
-    [SerializeField] Rigidbody2D rb;
 
-    [SerializeField] float moveSpeed = 30f;
-    [SerializeField] float moveDuration = .5f;
-
-    float ms = 0f;
     bool moving = false;
+
+    [SerializeField] Transform pointA;
+    [SerializeField] Transform pointB;
+    [SerializeField] float moveSpeed = 10f;
+
+    private Vector3 nextPosition;
+
+    void Start()
+    {
+        nextPosition = pointB.position;
+    }
 
     void Update()
     {
         if (hittable.isHit())
-        {
-            //moving = true;
-            //rb.linearVelocity = new Vector2(hittable.hitDirection.x, hittable.hitDirection.y) * moveSpeed;
-            rb.AddForce(hittable.hitDirection * moveSpeed);
-        }
-        /*
+            moving = true;
+
         if (moving)
-            Move();
-        */
-    }
-    /*
-    void Move()
-    {
-        //Wait for the moveDuration to end and stop the block
-        while (ms <= moveDuration)
         {
-            ms += Time.deltaTime;
-            return;
+            transform.position = Vector3.MoveTowards(transform.position, nextPosition, moveSpeed * Time.deltaTime);
+
+            if (transform.position == nextPosition)
+            {
+                if (nextPosition == pointA.position)
+                    nextPosition = pointB.position;
+                else
+                    nextPosition = pointA.position;
+                moving = false;
+            }
         }
-        ms = 0f;
-        rb.linearVelocity = new Vector2(0, 0);
-        moving = false;
     }
-    */
 }

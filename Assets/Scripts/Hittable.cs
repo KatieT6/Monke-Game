@@ -3,7 +3,7 @@ using UnityEngine;
 public class Hittable : MonoBehaviour
 {
     bool hit = false;
-    public Vector2 hitDirection;
+    [HideInInspector] public Vector2 hitDirection;
 
     public void GetHit(Vector2 direction)
     {

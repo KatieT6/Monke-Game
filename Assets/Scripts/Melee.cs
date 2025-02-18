@@ -1,11 +1,16 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class Melee : MonoBehaviour
 {
     [SerializeField] PlayerMovement player;
 
-    [Header("Attack Settings: ")]
+    [SerializeField] CinemachineImpulseSource impulseSource;
+    [SerializeField] private float shakeForce = .5f;
+
+    
     private float attackCooldown;
+    [Header("Attack Settings: ")]
     [SerializeField] private float attackSpeed;
     [SerializeField] private int knockbackForce;
     [SerializeField] private int punchForce;
@@ -54,6 +59,7 @@ public class Melee : MonoBehaviour
     {
         worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         direction = new Vector2(worldMousePos.x - transform.position.x, worldMousePos.y - transform.position.y);
+        direction.Normalize();
         if (!checkHit())
         {
             isPunching = true;
@@ -63,16 +69,23 @@ public class Melee : MonoBehaviour
 
     bool checkHit()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, attackRange, hitLayers);
+        float angle = Vector2.Angle(new Vector2(1,0), direction);
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(1, 0.7f), 0, direction, attackRange - .5f, hitLayers);
         if (hit)
         {
+            ShakeCamera(direction);
             isPunching = false;
             Hittable hittable;
             player.Knockback(knockbackForce, direction);
-            if (hittable = hit.collider.GetComponent<Hittable>())
+            if (hittable = hittable = hit.collider.GetComponent<Hittable>())
                 hittable.GetHit(direction);  
         }
         return hit;
 
+    }
+
+    void ShakeCamera(Vector2 dir)
+    {
+        CameraShake.instance.ShakeCamera(impulseSource, shakeForce, -dir);
     }
 }

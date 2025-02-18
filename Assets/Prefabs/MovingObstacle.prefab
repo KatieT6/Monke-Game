@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 7892021714734727847}
   - component: {fileID: 8711939500093352535}
   - component: {fileID: 1920350040597591590}
-  - component: {fileID: 4515059557498528686}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,24 +150,6 @@ MonoBehaviour:
   pointA: {fileID: 801542531777103793}
   pointB: {fileID: 2006915740070555518}
   moveSpeed: 2
---- !u!252 &4515059557498528686
-SurfaceEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944855226516404023}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Speed: 2
-  m_SpeedVariation: 0
-  m_ForceScale: 0.1
-  m_UseContactForce: 0
-  m_UseFriction: 1
-  m_UseBounce: 1
 --- !u!1 &3580267959366316495
 GameObject:
   m_ObjectHideFlags: 0
