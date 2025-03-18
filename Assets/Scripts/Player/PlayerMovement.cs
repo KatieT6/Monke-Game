@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] PlayerInput input;
-    [SerializeField] Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
 
     private InputAction moveAction;
 

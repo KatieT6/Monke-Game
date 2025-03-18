@@ -20,19 +20,20 @@ public class FallingPlatform : MonoBehaviour
         if (hittable.isHit())
             StartCoroutine("Drop");
     }
-
+    /*
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Player")
+        Debug.Log(col.gameObject);
+        if(col.gameObject.tag == "PlayerFeet")
             StartCoroutine("Drop");
     }
+    */
 
     IEnumerator Drop()
     {
-        
         yield return new WaitForSeconds(dropDelay);
-        rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.gravityScale = .1f;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.linearVelocityY = -15;
         yield return new WaitForSeconds(respawnTime);
         Respawn();
     }
