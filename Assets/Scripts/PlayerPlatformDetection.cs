@@ -20,10 +20,8 @@ public class PlayerPlatformDetection : MonoBehaviour
     {
         if (col.gameObject.tag == "FallingPlatform")
         {
-            Debug.Log(player.rb.linearVelocityY);
             if (player.rb.linearVelocityY <= 0)
             {
-                Debug.Log(col.gameObject);
                 col.gameObject.GetComponent<FallingPlatform>().StartCoroutine("Drop");
             }
         }

@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] PlayerInput input;
     [SerializeField] public Rigidbody2D rb;
+    [SerializeField] private Transform bodyTransform;
 
     private InputAction moveAction;
 
@@ -19,6 +20,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector2 boxSize;
     [SerializeField] float castDistance;
     [SerializeField] LayerMask groundLayer;
+
+    [Header("Wall Slide Settings: ")]
+    [SerializeField] Transform wallCheck;
+    bool isWallTouch;
+    bool isSliding;
+    [SerializeField] float wallSlidingSpeed;
 
     [Header("Move Settings: ")]
     [SerializeField] float moveSpeed = 10f;
@@ -54,6 +61,10 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
 
+        #region FLIP_CHARACTER 
+        bodyTransform.localScale = new Vector3(1 * Mathf.Sign(move), bodyTransform.localScale.y, bodyTransform.localScale.z);
+        #endregion
+
         #region CLAMP_SPEED
         rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed);
         rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -maxSpeed, maxSpeed);
@@ -70,6 +81,25 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.gravityScale = gravityScale;
         }
+        #endregion
+
+        #region WALL_SLIDE
+        isWallTouch = Physics2D.OverlapBox(wallCheck.position, new Vector2(.2f, 0.4f), 0, groundLayer);
+
+        if (isWallTouch && !isGrounded() && move != 0f)
+        {
+            isSliding = true;
+        }
+        else
+        {
+            isSliding = false;
+        }
+        if (isSliding)
+        {
+            rb.linearVelocityY = rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -maxSpeed *.2f, maxSpeed*.7f);
+        }
+
+
         #endregion
     }
 
